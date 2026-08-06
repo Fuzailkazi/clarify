@@ -17,4 +17,38 @@ import * as Prisma from './internal/prismaNamespaceBrowser'
 export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
-
+/**
+ * Model ReviewBatch
+ * 
+ */
+export type ReviewBatch = Prisma.ReviewBatchModel
+/**
+ * Model Review
+ * 
+ */
+export type Review = Prisma.ReviewModel
+/**
+ * Model Theme
+ * 
+ */
+export type Theme = Prisma.ThemeModel
+/**
+ * Model Pulse
+ * 
+ */
+export type Pulse = Prisma.PulseModel
+/**
+ * Model FeeExplanation
+ * 
+ */
+export type FeeExplanation = Prisma.FeeExplanationModel
+/**
+ * Model Approval
+ * 
+ */
+export type Approval = Prisma.ApprovalModel
+/**
+ * Model IntegrationLog
+ * 
+ */
+export type IntegrationLog = Prisma.IntegrationLogModel

@@ -9,7 +9,29 @@
 * 🟢 You can import this file directly.
 */
 
+export const BatchStatus = {
+  uploaded: 'uploaded',
+  themed: 'themed',
+  analyzed: 'analyzed',
+  generated: 'generated',
+  awaiting_approval: 'awaiting_approval',
+  executed: 'executed'
+} as const
+
+export type BatchStatus = (typeof BatchStatus)[keyof typeof BatchStatus]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const IntegrationTarget = {
+  notion: 'notion',
+  gmail: 'gmail'
+} as const
+
+export type IntegrationTarget = (typeof IntegrationTarget)[keyof typeof IntegrationTarget]
+
+
+export const IntegrationStatus = {
+  success: 'success',
+  failed: 'failed'
+} as const
+
+export type IntegrationStatus = (typeof IntegrationStatus)[keyof typeof IntegrationStatus]

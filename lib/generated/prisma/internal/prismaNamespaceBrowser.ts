@@ -51,7 +51,13 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-
+  ReviewBatch: 'ReviewBatch',
+  Review: 'Review',
+  Theme: 'Theme',
+  Pulse: 'Pulse',
+  FeeExplanation: 'FeeExplanation',
+  Approval: 'Approval',
+  IntegrationLog: 'IntegrationLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -68,4 +74,132 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const ReviewBatchScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  sourceFile: 'sourceFile',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReviewBatchScalarFieldEnum = (typeof ReviewBatchScalarFieldEnum)[keyof typeof ReviewBatchScalarFieldEnum]
+
+
+export const ReviewScalarFieldEnum = {
+  id: 'id',
+  batchId: 'batchId',
+  text: 'text',
+  rating: 'rating',
+  themeId: 'themeId',
+  createdAt: 'createdAt'
+} as const
+
+export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
+
+
+export const ThemeScalarFieldEnum = {
+  id: 'id',
+  batchId: 'batchId',
+  name: 'name',
+  count: 'count',
+  rank: 'rank',
+  sampleQuotes: 'sampleQuotes',
+  createdAt: 'createdAt'
+} as const
+
+export type ThemeScalarFieldEnum = (typeof ThemeScalarFieldEnum)[keyof typeof ThemeScalarFieldEnum]
+
+
+export const PulseScalarFieldEnum = {
+  id: 'id',
+  batchId: 'batchId',
+  summary: 'summary',
+  observation: 'observation',
+  actions: 'actions',
+  topThemes: 'topThemes',
+  wordCount: 'wordCount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PulseScalarFieldEnum = (typeof PulseScalarFieldEnum)[keyof typeof PulseScalarFieldEnum]
+
+
+export const FeeExplanationScalarFieldEnum = {
+  id: 'id',
+  batchId: 'batchId',
+  feeName: 'feeName',
+  explanation: 'explanation',
+  officialSources: 'officialSources',
+  createdAt: 'createdAt'
+} as const
+
+export type FeeExplanationScalarFieldEnum = (typeof FeeExplanationScalarFieldEnum)[keyof typeof FeeExplanationScalarFieldEnum]
+
+
+export const ApprovalScalarFieldEnum = {
+  id: 'id',
+  batchId: 'batchId',
+  approvedBy: 'approvedBy',
+  note: 'note',
+  createdAt: 'createdAt'
+} as const
+
+export type ApprovalScalarFieldEnum = (typeof ApprovalScalarFieldEnum)[keyof typeof ApprovalScalarFieldEnum]
+
+
+export const IntegrationLogScalarFieldEnum = {
+  id: 'id',
+  batchId: 'batchId',
+  target: 'target',
+  status: 'status',
+  externalId: 'externalId',
+  error: 'error',
+  createdAt: 'createdAt'
+} as const
+
+export type IntegrationLogScalarFieldEnum = (typeof IntegrationLogScalarFieldEnum)[keyof typeof IntegrationLogScalarFieldEnum]
+
+
+export const SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+} as const
+
+export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

@@ -8,4 +8,11 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/ReviewBatch'
+export type * from './models/Review'
+export type * from './models/Theme'
+export type * from './models/Pulse'
+export type * from './models/FeeExplanation'
+export type * from './models/Approval'
+export type * from './models/IntegrationLog'
 export type * from './commonInputTypes'

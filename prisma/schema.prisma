@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../lib/generated/prisma"
@@ -10,4 +5,110 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+enum BatchStatus {
+  uploaded
+  themed
+  analyzed
+  generated
+  awaiting_approval
+  executed
+}
+
+enum IntegrationTarget {
+  notion
+  gmail
+}
+
+enum IntegrationStatus {
+  success
+  failed
+}
+
+model ReviewBatch {
+  id         String        @id @default(cuid())
+  name       String
+  sourceFile String
+  status     BatchStatus   @default(uploaded)
+  reviews    Review[]
+  themes     Theme[]
+  pulse      Pulse?
+  fee        FeeExplanation?
+  approval   Approval?
+  logs       IntegrationLog[]
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+}
+
+model Review {
+  id        String       @id @default(cuid())
+  batchId   String
+  batch     ReviewBatch  @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  text      String       @db.Text
+  rating    Int?
+  themeId   String?
+  theme     Theme?       @relation(fields: [themeId], references: [id])
+  createdAt DateTime     @default(now())
+
+  @@index([batchId])
+}
+
+model Theme {
+  id           String      @id @default(cuid())
+  batchId      String
+  batch        ReviewBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  name         String
+  count        Int
+  rank         Int
+  sampleQuotes String[]    @default([])
+  reviews      Review[]
+  createdAt    DateTime    @default(now())
+
+  @@index([batchId])
+}
+
+model Pulse {
+  id          String       @id @default(cuid())
+  batchId     String       @unique
+  batch       ReviewBatch  @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  summary     String       @db.Text
+  observation String       @db.Text
+  actions     Json
+  topThemes   Json
+  wordCount   Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model FeeExplanation {
+  id              String       @id @default(cuid())
+  batchId         String       @unique
+  batch           ReviewBatch  @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  feeName         String
+  explanation     String       @db.Text
+  officialSources Json
+  createdAt       DateTime     @default(now())
+}
+
+model Approval {
+  id         String       @id @default(cuid())
+  batchId    String       @unique
+  batch      ReviewBatch  @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  approvedBy String
+  note       String?
+  createdAt  DateTime     @default(now())
+}
+
+model IntegrationLog {
+  id         String            @id @default(cuid())
+  batchId    String
+  batch      ReviewBatch       @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  target     IntegrationTarget
+  status     IntegrationStatus
+  externalId String?
+  error      String?           @db.Text
+  createdAt  DateTime          @default(now())
+
+  @@index([batchId, target])
 }
