@@ -13,16 +13,16 @@
 - **Done when:** `next build` passes, DB reachable, sample CSV committed
 
 ## Phase 1 — Data model + upload
-- [ ] Prisma schema: `ReviewBatch`, `Review`, `Theme`, `Pulse`, `FeeExplanation`, `Approval`, `IntegrationLog` (batch status state machine)
-- [ ] `POST /api/batches` — CSV upload + parse + persist reviews
-- [ ] Simple upload UI (file picker → batch list)
-- [ ] `GET /api/batches/:id` — batch detail with status
+- [x] Prisma schema: `ReviewBatch`, `Review`, `Theme`, `Pulse`, `FeeExplanation`, `Approval`, `IntegrationLog` (batch status state machine)
+- [x] `POST /api/batches` — CSV upload + parse + persist reviews
+- [x] Simple upload UI (file picker → batch list)
+- [x] `GET /api/batches/:id` — batch detail with status
 - **Done when:** upload a CSV in UI, reviews visible in NeonDB
 
 ## Phase 2 — Review intelligence (deterministic, no LLM)
-- [ ] Heuristic theme clustering (keyword groups: fees, bugs, UX, pricing, support)
-- [ ] Top-3 themes + representative quotes
-- [ ] Theme table UI on batch detail page
+- [x] Heuristic theme clustering (keyword groups: fees, bugs, UX, pricing, support)
+- [x] Top-3 themes + representative quotes
+- [x] Theme table UI on batch detail page
 - **Done when:** upload → see themes offline, zero tokens spent
 
 ## Phase 3 — Gemini intelligence layer
