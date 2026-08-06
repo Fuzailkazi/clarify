@@ -57,7 +57,8 @@ export async function generateStructured<T>(
     }
 
     try {
-      const parsed = JSON.parse(text);
+      let parsed: unknown = JSON.parse(text);
+      if (typeof parsed === "string") parsed = JSON.parse(parsed);
       const data = schema.parse(parsed);
       return { data, model: GEMINI_MODEL, mock: false };
     } catch (err) {
