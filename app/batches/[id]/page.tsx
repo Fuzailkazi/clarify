@@ -39,8 +39,8 @@ export default async function BatchPage({ params }: { params: Promise<{ id: stri
         <section className="mt-6 rounded-xl border border-dashed border-zinc-300 p-5 dark:border-zinc-700">
           <h2 className="text-sm font-medium">Review intelligence</h2>
           <p className="mt-1 text-sm text-zinc-500">
-            Cluster the reviews into themes. This uses deterministic keyword analysis — no AI
-            tokens spent.
+            Cluster the reviews into themes using Gemini (deterministic keyword clues first, then
+            AI refinement).
           </p>
           <div className="mt-3">
             <AnalyzeButton batchId={batch.id} />
@@ -52,7 +52,11 @@ export default async function BatchPage({ params }: { params: Promise<{ id: stri
         <section className="mt-8">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-medium">Themes</h2>
-            <AnalyzeButton batchId={batch.id} disabled={batch.status !== "uploaded"} />
+            <AnalyzeButton
+              batchId={batch.id}
+              disabled={batch.status === "executed"}
+              canRerun={batch.status !== "uploaded"}
+            />
           </div>
           <ul className="mt-3 space-y-3">
             {batch.themes.map((t) => (

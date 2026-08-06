@@ -26,10 +26,10 @@
 - **Done when:** upload → see themes offline, zero tokens spent
 
 ## Phase 3 — Gemini intelligence layer
-- [ ] `lib/llm.ts` — `@google/genai` wrapper: JSON mode, Zod validation, 1 retry on failure, `LLM_MOCK=true` fixture mode
-- [ ] Prompt modules: theme analysis (≤5 themes, top 3, quotes) — `prompts/analyze.ts`
-- [ ] Wire `/api/batches/:id/analyze` — heuristic pass + LLM refine
-- [ ] Verify Gemini key works (or fall back to mock)
+- [x] `lib/llm.ts` — `@google/genai` wrapper: JSON mode, Zod validation, 1 retry on failure, `LLM_MOCK=true` fixture mode
+- [x] Prompt modules: theme analysis (≤5 themes, top 3, quotes) — `prompts/analyze.ts`
+- [x] Wire `/api/batches/:id/analyze` — heuristic pass + LLM refine
+- [ ] Verify Gemini key works (or fall back to mock) — ⚠️ current key invalid, mock path verified; real path awaiting valid `AIza…` key
 - **Done when:** real LLM themes shown in Next
 
 ## Phase 4 — Pulse + fee explanation
