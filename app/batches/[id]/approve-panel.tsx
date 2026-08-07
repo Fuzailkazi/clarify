@@ -56,7 +56,15 @@ export function ApprovePanel({
       if (!res.ok) {
         setError(data.error ?? "Execution failed");
       } else {
-        setResult(data.note ?? "Executed.");
+        const summary = (data.results ?? [])
+          .map(
+            (r: { target: string; ok?: boolean; skipped?: boolean }) =>
+              `${r.target}: ${r.skipped ? "already done" : r.ok ? "ok" : "failed"}`
+          )
+          .join(", ");
+        setResult(
+          `${data.mode === "mock" ? "Mock mode — " : ""}execution complete. ${summary}`
+        );
         router.refresh();
       }
     } catch {

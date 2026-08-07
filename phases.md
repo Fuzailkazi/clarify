@@ -46,11 +46,11 @@
 - **Done when:** cannot execute without an explicit approval in DB
 
 ## Phase 6 — Integrations: Notion (MCP)
-- [ ] `integrations/` interface: `appendToNotion` + `createGmailDraft`
-- [ ] `mock.ts` implementation (logs instead of writing) — default in dev
-- [ ] `mcpClient.ts` — connect Notion MCP via `@modelcontextprotocol/sdk`
-- [ ] `IntegrationLog` idempotency — one append per batch, no duplicates on retry
-- **Done when:** approved batch appends to Notion (mock first, real after token)
+- [x] `integrations/` interface: `appendToNotion` + `createGmailDraft`
+- [x] `mock.ts` implementation (logs instead of writing) — default in dev
+- [x] `mcp.ts` — `@modelcontextprotocol/sdk` stdio client, env-gated (`NOTION_MCP_COMMAND`, `INTEGRATIONS_MODE=mcp`)
+- [x] `IntegrationLog` idempotency — one append per batch, no duplicates on retry
+- **Done when:** approved batch appends to Notion (mock verified; real MCP awaits `NOTION_MCP_COMMAND` env)
 
 ## Phase 7 — Integrations: Gmail draft (MCP)
 - [ ] Connect Gmail MCP, `createGmailDraft(subject, body, to)`

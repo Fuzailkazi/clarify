@@ -19,6 +19,7 @@ export default async function BatchPage({ params }: { params: Promise<{ id: stri
       pulse: true,
       fee: true,
       approval: true,
+      logs: { orderBy: { createdAt: "asc" } },
     },
   });
 
@@ -185,6 +186,42 @@ export default async function BatchPage({ params }: { params: Promise<{ id: stri
           approvedBy={batch.approval?.approvedBy}
           status={batch.status}
         />
+      )}
+
+      {batch.logs.length > 0 && (
+        <section className="mt-8">
+          <h2 className="text-sm font-medium">Integration log</h2>
+          <ul className="mt-3 space-y-2">
+            {batch.logs.map((log) => (
+              <li
+                key={log.id}
+                className="flex items-center justify-between rounded-lg border border-zinc-200 px-4 py-3 dark:border-zinc-800"
+              >
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                      log.status === "success"
+                        ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
+                        : "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300"
+                    }`}
+                  >
+                    {log.status}
+                  </span>
+                  <span className="text-sm capitalize">{log.target}</span>
+                </div>
+                <div className="text-right">
+                  {log.externalId && (
+                    <p className="text-xs text-zinc-500">ID: {log.externalId}</p>
+                  )}
+                  {log.error && (
+                    <p className="max-w-[280px] truncate text-xs text-red-600">{log.error}</p>
+                  )}
+                  <p className="text-xs text-zinc-400">{formatDate(log.createdAt)}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
 
       <section className="mt-8">
