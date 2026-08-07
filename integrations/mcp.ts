@@ -11,6 +11,16 @@ import { renderFeeMarkdown, renderPulseMarkdown } from "./types";
 const NOTION_TOOL = process.env.NOTION_MCP_TOOL ?? "append_to_notion";
 const GMAIL_TOOL = process.env.GMAIL_MCP_TOOL ?? "create_draft";
 
+function toolArgs(envKey: string, fallback: Record<string, unknown>): Record<string, unknown> {
+  const raw = process.env[envKey];
+  if (!raw) return fallback;
+  try {
+    return { ...fallback, ...JSON.parse(raw) };
+  } catch {
+    throw new Error(`${envKey} must be valid JSON`);
+  }
+}
+
 function mcpCommand(name: string): string[] | null {
   const command = process.env[`${name}_MCP_COMMAND`];
   if (!command) return null;
@@ -30,7 +40,7 @@ class McpClient {
 
     const env: Record<string, string> = {};
     for (const [k, v] of Object.entries(process.env)) {
-      if (v !== undefined && k.startsWith(`${this.serverName}_MCP_`)) env[k] = v;
+      if (v !== undefined) env[k] = v;
     }
 
     this.transport = new StdioClientTransport({
@@ -79,11 +89,14 @@ export class McpIntegration implements ReviewIntegration {
     ].join("\n\n");
 
     try {
-      const externalId = await this.notion.callTool(NOTION_TOOL, {
-        content: body,
-        page: process.env.NOTION_MCP_PAGE,
-        parent: process.env.NOTION_MCP_PAGE,
-      });
+      const externalId = await this.notion.callTool(
+        NOTION_TOOL,
+        toolArgs("NOTION_MCP_TOOL_ARGS", {
+          content: body,
+          page: process.env.NOTION_MCP_PAGE,
+          parent: process.env.NOTION_MCP_PAGE,
+        })
+      );
       return { ok: true, externalId: String(externalId) };
     } catch (err) {
       return { ok: false, error: (err as Error).message };
@@ -98,11 +111,14 @@ export class McpIntegration implements ReviewIntegration {
     ].join("\n\n");
 
     try {
-      const externalId = await this.gmail.callTool(GMAIL_TOOL, {
-        subject,
-        body,
-        to: process.env.GMAIL_MCP_TO,
-      });
+      const externalId = await this.gmail.callTool(
+        GMAIL_TOOL,
+        toolArgs("GMAIL_MCP_TOOL_ARGS", {
+          subject,
+          body,
+          to: process.env.GMAIL_MCP_TO,
+        })
+      );
       return { ok: true, externalId: String(externalId) };
     } catch (err) {
       return { ok: false, error: (err as Error).message };
