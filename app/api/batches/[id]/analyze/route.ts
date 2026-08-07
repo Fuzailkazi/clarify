@@ -45,6 +45,7 @@ export async function POST(_req: NextRequest, ctx: RouteContext<"/api/batches/[i
     .map((t, i) => ({
       batchId: id,
       name: t.name,
+      summary: t.summary,
       count: t.count,
       rank: i + 1,
       sampleQuotes: t.quotes.slice(0, 3),
@@ -55,7 +56,10 @@ export async function POST(_req: NextRequest, ctx: RouteContext<"/api/batches/[i
     prisma.theme.createMany({ data: themes }),
     prisma.reviewBatch.update({
       where: { id },
-      data: { status: BatchStatus.analyzed },
+      data: {
+        status: BatchStatus.analyzed,
+        feeConfusion: data.feeConfusion,
+      },
     }),
   ]);
 

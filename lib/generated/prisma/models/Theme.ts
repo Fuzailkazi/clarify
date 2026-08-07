@@ -40,6 +40,7 @@ export type ThemeMinAggregateOutputType = {
   id: string | null
   batchId: string | null
   name: string | null
+  summary: string | null
   count: number | null
   rank: number | null
   createdAt: Date | null
@@ -49,6 +50,7 @@ export type ThemeMaxAggregateOutputType = {
   id: string | null
   batchId: string | null
   name: string | null
+  summary: string | null
   count: number | null
   rank: number | null
   createdAt: Date | null
@@ -58,6 +60,7 @@ export type ThemeCountAggregateOutputType = {
   id: number
   batchId: number
   name: number
+  summary: number
   count: number
   rank: number
   sampleQuotes: number
@@ -80,6 +83,7 @@ export type ThemeMinAggregateInputType = {
   id?: true
   batchId?: true
   name?: true
+  summary?: true
   count?: true
   rank?: true
   createdAt?: true
@@ -89,6 +93,7 @@ export type ThemeMaxAggregateInputType = {
   id?: true
   batchId?: true
   name?: true
+  summary?: true
   count?: true
   rank?: true
   createdAt?: true
@@ -98,6 +103,7 @@ export type ThemeCountAggregateInputType = {
   id?: true
   batchId?: true
   name?: true
+  summary?: true
   count?: true
   rank?: true
   sampleQuotes?: true
@@ -195,6 +201,7 @@ export type ThemeGroupByOutputType = {
   id: string
   batchId: string
   name: string
+  summary: string | null
   count: number
   rank: number
   sampleQuotes: string[]
@@ -228,6 +235,7 @@ export type ThemeWhereInput = {
   id?: Prisma.StringFilter<"Theme"> | string
   batchId?: Prisma.StringFilter<"Theme"> | string
   name?: Prisma.StringFilter<"Theme"> | string
+  summary?: Prisma.StringNullableFilter<"Theme"> | string | null
   count?: Prisma.IntFilter<"Theme"> | number
   rank?: Prisma.IntFilter<"Theme"> | number
   sampleQuotes?: Prisma.StringNullableListFilter<"Theme">
@@ -240,6 +248,7 @@ export type ThemeOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   batchId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  summary?: Prisma.SortOrderInput | Prisma.SortOrder
   count?: Prisma.SortOrder
   rank?: Prisma.SortOrder
   sampleQuotes?: Prisma.SortOrder
@@ -255,6 +264,7 @@ export type ThemeWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ThemeWhereInput | Prisma.ThemeWhereInput[]
   batchId?: Prisma.StringFilter<"Theme"> | string
   name?: Prisma.StringFilter<"Theme"> | string
+  summary?: Prisma.StringNullableFilter<"Theme"> | string | null
   count?: Prisma.IntFilter<"Theme"> | number
   rank?: Prisma.IntFilter<"Theme"> | number
   sampleQuotes?: Prisma.StringNullableListFilter<"Theme">
@@ -267,6 +277,7 @@ export type ThemeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   batchId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  summary?: Prisma.SortOrderInput | Prisma.SortOrder
   count?: Prisma.SortOrder
   rank?: Prisma.SortOrder
   sampleQuotes?: Prisma.SortOrder
@@ -285,6 +296,7 @@ export type ThemeScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Theme"> | string
   batchId?: Prisma.StringWithAggregatesFilter<"Theme"> | string
   name?: Prisma.StringWithAggregatesFilter<"Theme"> | string
+  summary?: Prisma.StringNullableWithAggregatesFilter<"Theme"> | string | null
   count?: Prisma.IntWithAggregatesFilter<"Theme"> | number
   rank?: Prisma.IntWithAggregatesFilter<"Theme"> | number
   sampleQuotes?: Prisma.StringNullableListFilter<"Theme">
@@ -294,6 +306,7 @@ export type ThemeScalarWhereWithAggregatesInput = {
 export type ThemeCreateInput = {
   id?: string
   name: string
+  summary?: string | null
   count: number
   rank: number
   sampleQuotes?: Prisma.ThemeCreatesampleQuotesInput | string[]
@@ -306,6 +319,7 @@ export type ThemeUncheckedCreateInput = {
   id?: string
   batchId: string
   name: string
+  summary?: string | null
   count: number
   rank: number
   sampleQuotes?: Prisma.ThemeCreatesampleQuotesInput | string[]
@@ -316,6 +330,7 @@ export type ThemeUncheckedCreateInput = {
 export type ThemeUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   count?: Prisma.IntFieldUpdateOperationsInput | number
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   sampleQuotes?: Prisma.ThemeUpdatesampleQuotesInput | string[]
@@ -328,6 +343,7 @@ export type ThemeUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   batchId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   count?: Prisma.IntFieldUpdateOperationsInput | number
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   sampleQuotes?: Prisma.ThemeUpdatesampleQuotesInput | string[]
@@ -339,6 +355,7 @@ export type ThemeCreateManyInput = {
   id?: string
   batchId: string
   name: string
+  summary?: string | null
   count: number
   rank: number
   sampleQuotes?: Prisma.ThemeCreatesampleQuotesInput | string[]
@@ -348,6 +365,7 @@ export type ThemeCreateManyInput = {
 export type ThemeUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   count?: Prisma.IntFieldUpdateOperationsInput | number
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   sampleQuotes?: Prisma.ThemeUpdatesampleQuotesInput | string[]
@@ -358,6 +376,7 @@ export type ThemeUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   batchId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   count?: Prisma.IntFieldUpdateOperationsInput | number
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   sampleQuotes?: Prisma.ThemeUpdatesampleQuotesInput | string[]
@@ -391,6 +410,7 @@ export type ThemeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   batchId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  summary?: Prisma.SortOrder
   count?: Prisma.SortOrder
   rank?: Prisma.SortOrder
   sampleQuotes?: Prisma.SortOrder
@@ -406,6 +426,7 @@ export type ThemeMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   batchId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  summary?: Prisma.SortOrder
   count?: Prisma.SortOrder
   rank?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -415,6 +436,7 @@ export type ThemeMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   batchId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  summary?: Prisma.SortOrder
   count?: Prisma.SortOrder
   rank?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -503,6 +525,7 @@ export type ThemeUpdatesampleQuotesInput = {
 export type ThemeCreateWithoutBatchInput = {
   id?: string
   name: string
+  summary?: string | null
   count: number
   rank: number
   sampleQuotes?: Prisma.ThemeCreatesampleQuotesInput | string[]
@@ -513,6 +536,7 @@ export type ThemeCreateWithoutBatchInput = {
 export type ThemeUncheckedCreateWithoutBatchInput = {
   id?: string
   name: string
+  summary?: string | null
   count: number
   rank: number
   sampleQuotes?: Prisma.ThemeCreatesampleQuotesInput | string[]
@@ -553,6 +577,7 @@ export type ThemeScalarWhereInput = {
   id?: Prisma.StringFilter<"Theme"> | string
   batchId?: Prisma.StringFilter<"Theme"> | string
   name?: Prisma.StringFilter<"Theme"> | string
+  summary?: Prisma.StringNullableFilter<"Theme"> | string | null
   count?: Prisma.IntFilter<"Theme"> | number
   rank?: Prisma.IntFilter<"Theme"> | number
   sampleQuotes?: Prisma.StringNullableListFilter<"Theme">
@@ -562,6 +587,7 @@ export type ThemeScalarWhereInput = {
 export type ThemeCreateWithoutReviewsInput = {
   id?: string
   name: string
+  summary?: string | null
   count: number
   rank: number
   sampleQuotes?: Prisma.ThemeCreatesampleQuotesInput | string[]
@@ -573,6 +599,7 @@ export type ThemeUncheckedCreateWithoutReviewsInput = {
   id?: string
   batchId: string
   name: string
+  summary?: string | null
   count: number
   rank: number
   sampleQuotes?: Prisma.ThemeCreatesampleQuotesInput | string[]
@@ -598,6 +625,7 @@ export type ThemeUpdateToOneWithWhereWithoutReviewsInput = {
 export type ThemeUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   count?: Prisma.IntFieldUpdateOperationsInput | number
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   sampleQuotes?: Prisma.ThemeUpdatesampleQuotesInput | string[]
@@ -609,6 +637,7 @@ export type ThemeUncheckedUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   batchId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   count?: Prisma.IntFieldUpdateOperationsInput | number
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   sampleQuotes?: Prisma.ThemeUpdatesampleQuotesInput | string[]
@@ -618,6 +647,7 @@ export type ThemeUncheckedUpdateWithoutReviewsInput = {
 export type ThemeCreateManyBatchInput = {
   id?: string
   name: string
+  summary?: string | null
   count: number
   rank: number
   sampleQuotes?: Prisma.ThemeCreatesampleQuotesInput | string[]
@@ -627,6 +657,7 @@ export type ThemeCreateManyBatchInput = {
 export type ThemeUpdateWithoutBatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   count?: Prisma.IntFieldUpdateOperationsInput | number
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   sampleQuotes?: Prisma.ThemeUpdatesampleQuotesInput | string[]
@@ -637,6 +668,7 @@ export type ThemeUpdateWithoutBatchInput = {
 export type ThemeUncheckedUpdateWithoutBatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   count?: Prisma.IntFieldUpdateOperationsInput | number
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   sampleQuotes?: Prisma.ThemeUpdatesampleQuotesInput | string[]
@@ -647,6 +679,7 @@ export type ThemeUncheckedUpdateWithoutBatchInput = {
 export type ThemeUncheckedUpdateManyWithoutBatchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   count?: Prisma.IntFieldUpdateOperationsInput | number
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   sampleQuotes?: Prisma.ThemeUpdatesampleQuotesInput | string[]
@@ -688,6 +721,7 @@ export type ThemeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   batchId?: boolean
   name?: boolean
+  summary?: boolean
   count?: boolean
   rank?: boolean
   sampleQuotes?: boolean
@@ -701,6 +735,7 @@ export type ThemeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   batchId?: boolean
   name?: boolean
+  summary?: boolean
   count?: boolean
   rank?: boolean
   sampleQuotes?: boolean
@@ -712,6 +747,7 @@ export type ThemeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   batchId?: boolean
   name?: boolean
+  summary?: boolean
   count?: boolean
   rank?: boolean
   sampleQuotes?: boolean
@@ -723,13 +759,14 @@ export type ThemeSelectScalar = {
   id?: boolean
   batchId?: boolean
   name?: boolean
+  summary?: boolean
   count?: boolean
   rank?: boolean
   sampleQuotes?: boolean
   createdAt?: boolean
 }
 
-export type ThemeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "batchId" | "name" | "count" | "rank" | "sampleQuotes" | "createdAt", ExtArgs["result"]["theme"]>
+export type ThemeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "batchId" | "name" | "summary" | "count" | "rank" | "sampleQuotes" | "createdAt", ExtArgs["result"]["theme"]>
 export type ThemeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   batch?: boolean | Prisma.ReviewBatchDefaultArgs<ExtArgs>
   reviews?: boolean | Prisma.Theme$reviewsArgs<ExtArgs>
@@ -752,6 +789,7 @@ export type $ThemePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: string
     batchId: string
     name: string
+    summary: string | null
     count: number
     rank: number
     sampleQuotes: string[]
@@ -1184,6 +1222,7 @@ export interface ThemeFieldRefs {
   readonly id: Prisma.FieldRef<"Theme", 'String'>
   readonly batchId: Prisma.FieldRef<"Theme", 'String'>
   readonly name: Prisma.FieldRef<"Theme", 'String'>
+  readonly summary: Prisma.FieldRef<"Theme", 'String'>
   readonly count: Prisma.FieldRef<"Theme", 'Int'>
   readonly rank: Prisma.FieldRef<"Theme", 'Int'>
   readonly sampleQuotes: Prisma.FieldRef<"Theme", 'String[]'>

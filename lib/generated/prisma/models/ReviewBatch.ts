@@ -47,6 +47,7 @@ export type ReviewBatchCountAggregateOutputType = {
   name: number
   sourceFile: number
   status: number
+  feeConfusion: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -76,6 +77,7 @@ export type ReviewBatchCountAggregateInputType = {
   name?: true
   sourceFile?: true
   status?: true
+  feeConfusion?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -158,6 +160,7 @@ export type ReviewBatchGroupByOutputType = {
   name: string
   sourceFile: string
   status: $Enums.BatchStatus
+  feeConfusion: runtime.JsonValue | null
   createdAt: Date
   updatedAt: Date
   _count: ReviewBatchCountAggregateOutputType | null
@@ -188,6 +191,7 @@ export type ReviewBatchWhereInput = {
   name?: Prisma.StringFilter<"ReviewBatch"> | string
   sourceFile?: Prisma.StringFilter<"ReviewBatch"> | string
   status?: Prisma.EnumBatchStatusFilter<"ReviewBatch"> | $Enums.BatchStatus
+  feeConfusion?: Prisma.JsonNullableFilter<"ReviewBatch">
   createdAt?: Prisma.DateTimeFilter<"ReviewBatch"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ReviewBatch"> | Date | string
   reviews?: Prisma.ReviewListRelationFilter
@@ -203,6 +207,7 @@ export type ReviewBatchOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   sourceFile?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  feeConfusion?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
@@ -221,6 +226,7 @@ export type ReviewBatchWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"ReviewBatch"> | string
   sourceFile?: Prisma.StringFilter<"ReviewBatch"> | string
   status?: Prisma.EnumBatchStatusFilter<"ReviewBatch"> | $Enums.BatchStatus
+  feeConfusion?: Prisma.JsonNullableFilter<"ReviewBatch">
   createdAt?: Prisma.DateTimeFilter<"ReviewBatch"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ReviewBatch"> | Date | string
   reviews?: Prisma.ReviewListRelationFilter
@@ -236,6 +242,7 @@ export type ReviewBatchOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   sourceFile?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  feeConfusion?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ReviewBatchCountOrderByAggregateInput
@@ -251,6 +258,7 @@ export type ReviewBatchScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"ReviewBatch"> | string
   sourceFile?: Prisma.StringWithAggregatesFilter<"ReviewBatch"> | string
   status?: Prisma.EnumBatchStatusWithAggregatesFilter<"ReviewBatch"> | $Enums.BatchStatus
+  feeConfusion?: Prisma.JsonNullableWithAggregatesFilter<"ReviewBatch">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ReviewBatch"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ReviewBatch"> | Date | string
 }
@@ -260,6 +268,7 @@ export type ReviewBatchCreateInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewCreateNestedManyWithoutBatchInput
@@ -275,6 +284,7 @@ export type ReviewBatchUncheckedCreateInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBatchInput
@@ -290,6 +300,7 @@ export type ReviewBatchUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUpdateManyWithoutBatchNestedInput
@@ -305,6 +316,7 @@ export type ReviewBatchUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBatchNestedInput
@@ -320,6 +332,7 @@ export type ReviewBatchCreateManyInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -329,6 +342,7 @@ export type ReviewBatchUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -338,6 +352,7 @@ export type ReviewBatchUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -347,6 +362,7 @@ export type ReviewBatchCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   sourceFile?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  feeConfusion?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -475,6 +491,7 @@ export type ReviewBatchCreateWithoutReviewsInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   themes?: Prisma.ThemeCreateNestedManyWithoutBatchInput
@@ -489,6 +506,7 @@ export type ReviewBatchUncheckedCreateWithoutReviewsInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   themes?: Prisma.ThemeUncheckedCreateNestedManyWithoutBatchInput
@@ -519,6 +537,7 @@ export type ReviewBatchUpdateWithoutReviewsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   themes?: Prisma.ThemeUpdateManyWithoutBatchNestedInput
@@ -533,6 +552,7 @@ export type ReviewBatchUncheckedUpdateWithoutReviewsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   themes?: Prisma.ThemeUncheckedUpdateManyWithoutBatchNestedInput
@@ -547,6 +567,7 @@ export type ReviewBatchCreateWithoutThemesInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewCreateNestedManyWithoutBatchInput
@@ -561,6 +582,7 @@ export type ReviewBatchUncheckedCreateWithoutThemesInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBatchInput
@@ -591,6 +613,7 @@ export type ReviewBatchUpdateWithoutThemesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUpdateManyWithoutBatchNestedInput
@@ -605,6 +628,7 @@ export type ReviewBatchUncheckedUpdateWithoutThemesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBatchNestedInput
@@ -619,6 +643,7 @@ export type ReviewBatchCreateWithoutPulseInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewCreateNestedManyWithoutBatchInput
@@ -633,6 +658,7 @@ export type ReviewBatchUncheckedCreateWithoutPulseInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBatchInput
@@ -663,6 +689,7 @@ export type ReviewBatchUpdateWithoutPulseInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUpdateManyWithoutBatchNestedInput
@@ -677,6 +704,7 @@ export type ReviewBatchUncheckedUpdateWithoutPulseInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBatchNestedInput
@@ -691,6 +719,7 @@ export type ReviewBatchCreateWithoutFeeInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewCreateNestedManyWithoutBatchInput
@@ -705,6 +734,7 @@ export type ReviewBatchUncheckedCreateWithoutFeeInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBatchInput
@@ -735,6 +765,7 @@ export type ReviewBatchUpdateWithoutFeeInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUpdateManyWithoutBatchNestedInput
@@ -749,6 +780,7 @@ export type ReviewBatchUncheckedUpdateWithoutFeeInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBatchNestedInput
@@ -763,6 +795,7 @@ export type ReviewBatchCreateWithoutApprovalInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewCreateNestedManyWithoutBatchInput
@@ -777,6 +810,7 @@ export type ReviewBatchUncheckedCreateWithoutApprovalInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBatchInput
@@ -807,6 +841,7 @@ export type ReviewBatchUpdateWithoutApprovalInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUpdateManyWithoutBatchNestedInput
@@ -821,6 +856,7 @@ export type ReviewBatchUncheckedUpdateWithoutApprovalInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBatchNestedInput
@@ -835,6 +871,7 @@ export type ReviewBatchCreateWithoutLogsInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewCreateNestedManyWithoutBatchInput
@@ -849,6 +886,7 @@ export type ReviewBatchUncheckedCreateWithoutLogsInput = {
   name: string
   sourceFile: string
   status?: $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBatchInput
@@ -879,6 +917,7 @@ export type ReviewBatchUpdateWithoutLogsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUpdateManyWithoutBatchNestedInput
@@ -893,6 +932,7 @@ export type ReviewBatchUncheckedUpdateWithoutLogsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sourceFile?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumBatchStatusFieldUpdateOperationsInput | $Enums.BatchStatus
+  feeConfusion?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBatchNestedInput
@@ -956,6 +996,7 @@ export type ReviewBatchSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   name?: boolean
   sourceFile?: boolean
   status?: boolean
+  feeConfusion?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   reviews?: boolean | Prisma.ReviewBatch$reviewsArgs<ExtArgs>
@@ -972,6 +1013,7 @@ export type ReviewBatchSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   name?: boolean
   sourceFile?: boolean
   status?: boolean
+  feeConfusion?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["reviewBatch"]>
@@ -981,6 +1023,7 @@ export type ReviewBatchSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   name?: boolean
   sourceFile?: boolean
   status?: boolean
+  feeConfusion?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["reviewBatch"]>
@@ -990,11 +1033,12 @@ export type ReviewBatchSelectScalar = {
   name?: boolean
   sourceFile?: boolean
   status?: boolean
+  feeConfusion?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ReviewBatchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "sourceFile" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["reviewBatch"]>
+export type ReviewBatchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "sourceFile" | "status" | "feeConfusion" | "createdAt" | "updatedAt", ExtArgs["result"]["reviewBatch"]>
 export type ReviewBatchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reviews?: boolean | Prisma.ReviewBatch$reviewsArgs<ExtArgs>
   themes?: boolean | Prisma.ReviewBatch$themesArgs<ExtArgs>
@@ -1022,6 +1066,7 @@ export type $ReviewBatchPayload<ExtArgs extends runtime.Types.Extensions.Interna
     name: string
     sourceFile: string
     status: $Enums.BatchStatus
+    feeConfusion: runtime.JsonValue | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["reviewBatch"]>
@@ -1457,6 +1502,7 @@ export interface ReviewBatchFieldRefs {
   readonly name: Prisma.FieldRef<"ReviewBatch", 'String'>
   readonly sourceFile: Prisma.FieldRef<"ReviewBatch", 'String'>
   readonly status: Prisma.FieldRef<"ReviewBatch", 'BatchStatus'>
+  readonly feeConfusion: Prisma.FieldRef<"ReviewBatch", 'Json'>
   readonly createdAt: Prisma.FieldRef<"ReviewBatch", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ReviewBatch", 'DateTime'>
 }

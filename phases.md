@@ -33,9 +33,9 @@
 - **Done when:** real LLM themes shown in Next
 
 ## Phase 4 — Pulse + fee explanation
-- [ ] Prompt modules: weekly pulse (≤250 words, enforced in validation) + fee explanation (factual, neutral, no financial advice, official sources field)
-- [ ] `POST /api/batches/:id/generate`
-- [ ] Review UI: themes + pulse + explanation rendered for approval
+- [x] Prompt modules: weekly pulse (≤250 words, enforced in validation) + fee explanation (factual, neutral, no financial advice, official sources field)
+- [x] `POST /api/batches/:id/generate`
+- [x] Review UI: themes + pulse + explanation rendered for approval
 - **Done when:** full generated output reviewable in UI
 
 ## Phase 5 — Approval gate

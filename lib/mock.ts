@@ -1,4 +1,5 @@
 import type { AnalysisBatch } from "@/prompts/analyze";
+import type { FeeExplanation, Pulse } from "@/prompts/generate";
 
 export function mockThemeAnalysis(): AnalysisBatch {
   return {
@@ -38,6 +39,38 @@ export function mockThemeAnalysis(): AnalysisBatch {
           "Transaction list shows wrong dates after the update.",
           "Notifications are duplicated every time I get a mutual fund statement.",
         ],
+      },
+    ],
+  };
+}
+
+export function mockPulse(): Pulse {
+  return {
+    summary:
+      "Exit load confusion dominates this week's reviews: customers are surprised by redemption deductions and frustrated that charges are not shown before confirming. App performance issues (crashes, slow login) and duplicate notifications also surface as lower-frequency but consistent complaints.",
+    observation:
+      "Fee awareness is a communication problem, not just a pricing one — no warning exists in the redemption flow and support lacks a standard explanation, so the same confusion recurs weekly.",
+    actions: [
+      "Show expected exit load and net proceeds before the user confirms redemption.",
+      "Add a plain-language exit load explainer in the mutual fund help center.",
+      "Give support agents a copy-ready fees explanation to use consistently.",
+    ],
+  };
+}
+
+export function mockFeeExplanation(): FeeExplanation {
+  return {
+    feeName: "Exit load",
+    explanation:
+      "An exit load is a fee charged by a mutual fund scheme when you redeem (sell) your units within a specified period. It is set by the fund, disclosed in the scheme's offer document, and not a platform fee. The amount you receive is the redemption value minus any applicable exit load and taxes.",
+    officialSources: [
+      {
+        title: "SEBI — Mutual funds and fees",
+        url: "https://www.sebi.gov.in/",
+      },
+      {
+        title: "AMFI — Understanding exit load",
+        url: "https://www.amfiindia.com/",
       },
     ],
   };
