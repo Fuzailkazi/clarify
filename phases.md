@@ -53,8 +53,9 @@
 - **Done when:** approved batch appends to Notion (mock verified; real MCP awaits `NOTION_MCP_COMMAND` env)
 
 ## Phase 7 — Integrations: Gmail draft (MCP)
-- [ ] Connect Gmail MCP, `createGmailDraft(subject, body, to)`
-- [ ] Execute step: Notion append + Gmail draft in one action, failures surfaced in UI
+- [x] Connect Gmail MCP, `createGmailDraft(subject, body, to)` — `GMAIL_MCP_COMMAND`/`GMAIL_MCP_TOOL` env-gated
+- [x] Execute step: Notion append + Gmail draft in one action, failures surfaced in UI (per-target log)
+- [x] Failure handling: failed target logged, batch not marked executed
 - **Done when:** approved batch creates a real (or mocked) Gmail draft
 
 ## Phase 8 — Polish & demo runbook

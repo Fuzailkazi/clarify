@@ -25,6 +25,7 @@ export class MockIntegration implements ReviewIntegration {
 
   async createGmailDraft(input: GmailInput): Promise<IntegrationResult> {
     const subject = `Weekly Product Pulse — ${input.batchName}`;
+    const to = process.env.GMAIL_MCP_TO ?? "team@clarify.test";
     const body = [
       renderPulseMarkdown(input.pulse),
       "",
@@ -33,7 +34,7 @@ export class MockIntegration implements ReviewIntegration {
       `_batch ${input.batchId} · mock mode_`,
     ].join("\n");
 
-    console.log("[integrations:mock] Gmail draft (dry-run):", subject, body);
+    console.log("[integrations:mock] Gmail draft (dry-run):", { to, subject, body });
     return {
       ok: true,
       externalId: `mock-gmail-${input.batchId}`,
