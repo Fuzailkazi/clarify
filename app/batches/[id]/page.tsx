@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { AnalyzeButton } from "./analyze-button";
 import { GenerateButton } from "./generate-button";
+import { ApprovePanel } from "./approve-panel";
 
 function formatDate(iso: Date) {
   return iso.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
@@ -17,6 +18,7 @@ export default async function BatchPage({ params }: { params: Promise<{ id: stri
       themes: { orderBy: { rank: "asc" } },
       pulse: true,
       fee: true,
+      approval: true,
     },
   });
 
@@ -174,6 +176,15 @@ export default async function BatchPage({ params }: { params: Promise<{ id: stri
             </ul>
           </div>
         </section>
+      )}
+
+      {generated && (
+        <ApprovePanel
+          batchId={batch.id}
+          approved={Boolean(batch.approval)}
+          approvedBy={batch.approval?.approvedBy}
+          status={batch.status}
+        />
       )}
 
       <section className="mt-8">

@@ -39,10 +39,10 @@
 - **Done when:** full generated output reviewable in UI
 
 ## Phase 5 — Approval gate
-- [ ] `Approval` model — explicit consent recorded (who/when)
-- [ ] `POST /api/batches/:id/approve` — server-side gate; execute blocked until approved
-- [ ] UI: "Review & Approve" screen, disabled actions until approved
-- [ ] Approval survives refresh (NeonDB)
+- [x] `Approval` model — explicit consent recorded (who/when)
+- [x] `POST /api/batches/:id/approve` — server-side gate; execute blocked until approved
+- [x] UI: "Review & Approve" screen, disabled actions until approved
+- [x] Approval survives refresh (NeonDB)
 - **Done when:** cannot execute without an explicit approval in DB
 
 ## Phase 6 — Integrations: Notion (MCP)
