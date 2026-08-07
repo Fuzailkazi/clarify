@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { AnalyzeButton } from "./analyze-button";
 import { GenerateButton } from "./generate-button";
 import { ApprovePanel } from "./approve-panel";
+import { PipelineSteps } from "../../components/pipeline-steps";
 
 function formatDate(iso: Date) {
   return iso.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
@@ -41,6 +42,10 @@ export default async function BatchPage({ params }: { params: Promise<{ id: stri
       <p className="mt-1 text-sm text-zinc-500">
         {batch.reviews.length} reviews · {batch.sourceFile} · uploaded {formatDate(batch.createdAt)}
       </p>
+
+      <div className="mt-4">
+        <PipelineSteps status={batch.status} />
+      </div>
 
       {!themed && (
         <section className="mt-6 rounded-xl border border-dashed border-zinc-300 p-5 dark:border-zinc-700">

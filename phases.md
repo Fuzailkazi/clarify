@@ -59,7 +59,8 @@
 - **Done when:** approved batch creates a real (or mocked) Gmail draft
 
 ## Phase 8 — Polish & demo runbook
-- [ ] Empty/error/loading states, retry UX
-- [ ] Success-metrics checklist demo: upload → insights → approve → Notion + Gmail
-- [ ] README with setup + demo steps
+- [x] Empty/error/loading states, retry UX (home loading, upload errors, per-target failure logs)
+- [x] Pipeline progress stepper on batch page
+- [x] Success-metrics checklist demo: upload → insights → approve → Notion + Gmail
+- [x] README with setup + demo steps; "Try sample CSV" one-click
 - **Done when:** end-to-end demo without manual edits, per success metrics

@@ -22,6 +22,7 @@ function formatDate(iso: string) {
 
 export default function Home() {
   const [batches, setBatches] = useState<BatchSummary[]>([]);
+  const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState<{ rows: number } | null>(null);
@@ -29,21 +30,19 @@ export default function Home() {
   const router = useRouter();
 
   const load = useCallback(async () => {
-    const res = await fetch("/api/batches", { cache: "no-store" });
-    if (res.ok) setBatches((await res.json()).batches);
+    try {
+      const res = await fetch("/api/batches", { cache: "no-store" });
+      if (res.ok) setBatches((await res.json()).batches);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
     load();
   }, [load]);
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const file = fileRef.current?.files?.[0];
-    if (!file) {
-      setError("Choose a CSV file first");
-      return;
-    }
+  async function uploadFile(file: File) {
     setUploading(true);
     setError(null);
     try {
@@ -61,6 +60,23 @@ export default function Home() {
       setError("Upload failed");
       setUploading(false);
     }
+  }
+
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const file = fileRef.current?.files?.[0];
+    if (!file) {
+      setError("Choose a CSV file first");
+      return;
+    }
+    await uploadFile(file);
+  }
+
+  async function useSampleCsv() {
+    const res = await fetch("/sample-reviews.csv");
+    const content = await res.text();
+    const file = new File([content], "sample-reviews.csv", { type: "text/csv" });
+    await uploadFile(file);
   }
 
   function onFilePicked(file: File) {
@@ -83,21 +99,38 @@ export default function Home() {
 
       <section className="mt-8 rounded-xl border border-zinc-200 p-5 dark:border-zinc-800">
         <h2 className="text-sm font-medium">Upload reviews</h2>
+        <p className="mt-1 text-xs text-zinc-500">
+          CSV with headers <code className="font-mono">text</code> and <code className="font-mono">rating</code>.
+        </p>
         <form onSubmit={onSubmit} className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center">
           <input
             ref={fileRef}
             type="file"
             accept=".csv,text/csv"
-            onChange={(e) => e.target.files?.[0] && onFilePicked(e.target.files[0])}
+            onChange={(e) => {
+              setError(null);
+              setPreview(null);
+              if (e.target.files?.[0]) onFilePicked(e.target.files[0]);
+            }}
             className="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-zinc-900 file:px-3 file:py-2 file:text-xs file:font-medium file:text-zinc-50 dark:file:bg-zinc-100 dark:file:text-zinc-900"
           />
-          <button
-            type="submit"
-            disabled={uploading}
-            className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-zinc-50 transition-opacity hover:opacity-90 disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900"
-          >
-            {uploading ? "Uploading…" : "Upload"}
-          </button>
+          <div className="flex gap-2">
+            <button
+              type="submit"
+              disabled={uploading}
+              className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-zinc-50 transition-opacity hover:opacity-90 disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900"
+            >
+              {uploading ? "Uploading…" : "Upload"}
+            </button>
+            <button
+              type="button"
+              disabled={uploading}
+              onClick={useSampleCsv}
+              className="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 disabled:opacity-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
+            >
+              {uploading ? "…" : "Try sample CSV"}
+            </button>
+          </div>
         </form>
         {preview && (
           <p className="mt-2 text-xs text-emerald-600">
@@ -109,7 +142,9 @@ export default function Home() {
 
       <section className="mt-8">
         <h2 className="text-sm font-medium">Batches</h2>
-        {batches.length === 0 ? (
+        {loading ? (
+          <p className="mt-3 text-sm text-zinc-500">Loading…</p>
+        ) : batches.length === 0 ? (
           <p className="mt-3 text-sm text-zinc-500">
             No batches yet — upload a reviews CSV to get started.
           </p>
