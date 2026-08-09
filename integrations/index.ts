@@ -9,7 +9,12 @@ export function getIntegration(): ReviewIntegration {
 
   const useMcp =
     process.env.INTEGRATIONS_MODE === "mcp" &&
-    Boolean(process.env.NOTION_MCP_COMMAND || process.env.GMAIL_MCP_COMMAND);
+    Boolean(
+      process.env.NOTION_MCP_COMMAND ||
+        process.env.GMAIL_MCP_COMMAND ||
+        process.env.SLACK_MCP_COMMAND ||
+        process.env.GDOCS_MCP_COMMAND
+    );
 
   instance = useMcp ? new McpIntegration() : new MockIntegration();
   return instance;
@@ -17,7 +22,12 @@ export function getIntegration(): ReviewIntegration {
 
 export function getIntegrationMode(): "mcp" | "mock" {
   return process.env.INTEGRATIONS_MODE === "mcp" &&
-    Boolean(process.env.NOTION_MCP_COMMAND || process.env.GMAIL_MCP_COMMAND)
+    Boolean(
+      process.env.NOTION_MCP_COMMAND ||
+        process.env.GMAIL_MCP_COMMAND ||
+        process.env.SLACK_MCP_COMMAND ||
+        process.env.GDOCS_MCP_COMMAND
+    )
     ? "mcp"
     : "mock";
 }

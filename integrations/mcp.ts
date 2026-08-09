@@ -2,14 +2,22 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import type {
   GmailInput,
+  GoogleDocsInput,
   IntegrationResult,
   NotionInput,
   ReviewIntegration,
+  SlackInput,
 } from "./types";
-import { renderFeeMarkdown, renderPulseMarkdown } from "./types";
+import { renderFeeMarkdown, renderPulseMarkdown, renderSlackMessage } from "./types";
 
 const NOTION_TOOL = process.env.NOTION_MCP_TOOL ?? "append_to_notion";
 const GMAIL_TOOL = process.env.GMAIL_MCP_TOOL ?? "create_draft";
+const SLACK_TOOL = process.env.SLACK_MCP_TOOL ?? "conversations_add_message";
+const GDOCS_TOOL = process.env.GDOCS_MCP_TOOL ?? "appendMarkdown";
+
+export function mcpConfigured(name: string): boolean {
+  return Boolean(process.env[`${name}_MCP_COMMAND`]);
+}
 
 function toolArgs(envKey: string, fallback: Record<string, unknown>): Record<string, unknown> {
   const raw = process.env[envKey];
@@ -21,10 +29,20 @@ function toolArgs(envKey: string, fallback: Record<string, unknown>): Record<str
   }
 }
 
+function tokenizeArgs(raw: string): string[] {
+  const args: string[] = [];
+  const re = /"([^"]*)"|'([^']*)'|(\S+)/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(raw)) !== null) {
+    args.push(m[1] ?? m[2] ?? m[3]);
+  }
+  return args;
+}
+
 function mcpCommand(name: string): string[] | null {
   const command = process.env[`${name}_MCP_COMMAND`];
   if (!command) return null;
-  return [command, ...(process.env[`${name}_MCP_ARGS`]?.split(" ").filter(Boolean) ?? [])];
+  return [command, ...tokenizeArgs(process.env[`${name}_MCP_ARGS`] ?? "")];
 }
 
 class McpClient {
@@ -80,6 +98,8 @@ class McpClient {
 export class McpIntegration implements ReviewIntegration {
   private notion = new McpClient("NOTION");
   private gmail = new McpClient("GMAIL");
+  private slack = new McpClient("SLACK");
+  private gdocs = new McpClient("GDOCS");
 
   async appendToNotion(input: NotionInput): Promise<IntegrationResult> {
     const body = [
@@ -125,8 +145,48 @@ export class McpIntegration implements ReviewIntegration {
     }
   }
 
+  async postToSlack(input: SlackInput): Promise<IntegrationResult> {
+    const body = renderSlackMessage(input.pulse, input.fee);
+
+    try {
+      const externalId = await this.slack.callTool(
+        SLACK_TOOL,
+        toolArgs("SLACK_MCP_TOOL_ARGS", {
+          channel: process.env.SLACK_MCP_CHANNEL ?? "#general",
+          text: body,
+        })
+      );
+      return { ok: true, externalId: String(externalId) };
+    } catch (err) {
+      return { ok: false, error: (err as Error).message };
+    }
+  }
+
+  async appendToGoogleDoc(input: GoogleDocsInput): Promise<IntegrationResult> {
+    const body = [
+      `# ${input.batchName} — Weekly Pulse`,
+      renderPulseMarkdown(input.pulse),
+      input.fee ? `---\n${renderFeeMarkdown(input.fee)}` : "",
+    ].join("\n\n");
+
+    try {
+      const externalId = await this.gdocs.callTool(
+        GDOCS_TOOL,
+        toolArgs("GDOCS_MCP_TOOL_ARGS", {
+          documentId: process.env.GDOCS_MCP_DOCUMENT_ID,
+          markdown: body,
+        })
+      );
+      return { ok: true, externalId: String(externalId) };
+    } catch (err) {
+      return { ok: false, error: (err as Error).message };
+    }
+  }
+
   async close(): Promise<void> {
     await this.notion.close();
     await this.gmail.close();
+    await this.slack.close();
+    await this.gdocs.close();
   }
 }

@@ -23,7 +23,9 @@ export type BatchStatus = (typeof BatchStatus)[keyof typeof BatchStatus]
 
 export const IntegrationTarget = {
   notion: 'notion',
-  gmail: 'gmail'
+  gmail: 'gmail',
+  slack: 'slack',
+  google_docs: 'google_docs'
 } as const
 
 export type IntegrationTarget = (typeof IntegrationTarget)[keyof typeof IntegrationTarget]

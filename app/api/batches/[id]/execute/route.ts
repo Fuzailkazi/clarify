@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/db";
 import { getIntegration, getIntegrationMode } from "@/integrations";
+import { mcpConfigured } from "@/integrations/mcp";
 import {
   IntegrationStatus,
   IntegrationTarget,
@@ -84,11 +85,29 @@ export async function POST(_req: NextRequest, ctx: RouteContext<"/api/batches/[i
     results.push({ target, ok: res.ok, externalId: res.externalId, error: res.error });
   }
 
-  await runTarget(IntegrationTarget.notion, () =>
+  async function runConfigured(
+    target: IntegrationTarget,
+    server: string,
+    fn: () => Promise<{ ok: boolean; externalId?: string; error?: string }>
+  ): Promise<void> {
+    if (mode === "mcp" && !mcpConfigured(server)) {
+      results.push({ target, skipped: true });
+      return;
+    }
+    await runTarget(target, fn);
+  }
+
+  await runConfigured(IntegrationTarget.notion, "NOTION", () =>
     integration.appendToNotion({ batchId: id, batchName: batch.name, pulse, fee })
   );
-  await runTarget(IntegrationTarget.gmail, () =>
+  await runConfigured(IntegrationTarget.gmail, "GMAIL", () =>
     integration.createGmailDraft({ batchId: id, batchName: batch.name, pulse, fee })
+  );
+  await runConfigured(IntegrationTarget.slack, "SLACK", () =>
+    integration.postToSlack({ batchId: id, batchName: batch.name, pulse, fee })
+  );
+  await runConfigured(IntegrationTarget.google_docs, "GDOCS", () =>
+    integration.appendToGoogleDoc({ batchId: id, batchName: batch.name, pulse, fee })
   );
 
   const allOk = results.every((r) => r.skipped || r.ok);

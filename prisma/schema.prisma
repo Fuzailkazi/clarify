@@ -19,6 +19,8 @@ enum BatchStatus {
 enum IntegrationTarget {
   notion
   gmail
+  slack
+  google_docs
 }
 
 enum IntegrationStatus {

@@ -26,6 +26,20 @@ export type GmailInput = {
   fee: FeeContent | null;
 };
 
+export type SlackInput = {
+  batchId: string;
+  batchName: string;
+  pulse: PulseContent;
+  fee: FeeContent | null;
+};
+
+export type GoogleDocsInput = {
+  batchId: string;
+  batchName: string;
+  pulse: PulseContent;
+  fee: FeeContent | null;
+};
+
 export type IntegrationResult = {
   ok: boolean;
   externalId?: string;
@@ -35,6 +49,8 @@ export type IntegrationResult = {
 export interface ReviewIntegration {
   appendToNotion(input: NotionInput): Promise<IntegrationResult>;
   createGmailDraft(input: GmailInput): Promise<IntegrationResult>;
+  postToSlack(input: SlackInput): Promise<IntegrationResult>;
+  appendToGoogleDoc(input: GoogleDocsInput): Promise<IntegrationResult>;
 }
 
 export function renderPulseMarkdown(pulse: PulseContent): string {
@@ -49,6 +65,28 @@ export function renderPulseMarkdown(pulse: PulseContent): string {
     ),
   ];
   return lines.join("\n");
+}
+
+export function renderSlackMessage(pulse: PulseContent, fee: FeeContent | null): string {
+  const link = (s: { title: string; url: string }) =>
+    `<${s.url}|${s.title}>`;
+  const sources = fee
+    ? fee.officialSources.map((s) => `- ${link(s)}`).join("\n")
+    : "";
+  const feePart = fee
+    ? `*${fee.feeName}*\n${fee.explanation}\n\n*Official sources*\n${sources}`
+    : "";
+  const themeLines = pulse.topThemes.map((t) => `• ${t.name} (${t.count} reviews)`).join("\n");
+  return [
+    `*Weekly Product Pulse*`,
+    `*Summary*\n${pulse.summary}`,
+    `*Observation*\n${pulse.observation}`,
+    `*Actions*\n${pulse.actions.map((a) => `• ${a}`).join("\n")}`,
+    `*Themes*\n${themeLines}`,
+    fee ? `---\n${feePart}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n\n");
 }
 
 export function renderFeeMarkdown(fee: FeeContent): string {

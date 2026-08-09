@@ -95,7 +95,7 @@ export function ApprovePanel({
               ? "Executing…"
               : status === "executed"
                 ? "Executed"
-                : "Execute (Notion + Gmail)"}
+                : "Execute approved actions"}
           </button>
           {result && <p className="mt-2 text-xs text-emerald-700 dark:text-emerald-300">{result}</p>}
           {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
@@ -108,8 +108,9 @@ export function ApprovePanel({
     <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-5 dark:border-amber-900 dark:bg-amber-950/40">
       <h2 className="text-sm font-semibold">Review & approve external actions</h2>
       <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-        On approval, Clarify will: append this pulse + fee explanation to <b>Notion</b> and create
-        a <b>Gmail draft</b> with the weekly pulse and support explanation.
+        On approval, Clarify will: append this pulse + fee explanation to <b>Notion</b>, create
+        a <b>Gmail draft</b>, post the pulse to <b>Slack</b>, and append it to a <b>Google Doc</b>.
+        Targets without credentials are skipped.
       </p>
       <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
         <input
