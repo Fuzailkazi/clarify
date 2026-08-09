@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/db";
 import { generateIntelligence } from "@/lib/generate";
+import { buildTrends } from "@/lib/trends";
 import { BatchStatus } from "@/lib/generated/prisma/enums";
 
 export const dynamic = "force-dynamic";
@@ -18,6 +19,12 @@ export async function POST(_req: NextRequest, ctx: RouteContext<"/api/batches/[i
   if (batch.themes.length === 0) {
     return Response.json({ error: "Run analysis first" }, { status: 400 });
   }
+
+  const previous = await prisma.reviewBatch.findFirst({
+    where: { createdAt: { lt: batch.createdAt }, themes: { some: {} } },
+    include: { themes: { orderBy: { rank: "asc" }, take: 5 } },
+    orderBy: { createdAt: "desc" },
+  });
 
   const feeConfusion =
     (batch.feeConfusion as { detected?: boolean; feeName?: string | null; explanation?: string | null } | null) ??
@@ -37,7 +44,8 @@ export async function POST(_req: NextRequest, ctx: RouteContext<"/api/batches/[i
         detected: feeConfusion?.detected ?? false,
         name: feeConfusion?.feeName ?? null,
         explanation: feeConfusion?.explanation ?? null,
-      }
+      },
+      previous?.themes.map((t) => ({ name: t.name, count: t.count }))
     );
   } catch (err) {
     console.error("Generate failed:", err);
@@ -52,6 +60,11 @@ export async function POST(_req: NextRequest, ctx: RouteContext<"/api/batches/[i
   }
 
   const { pulse, fee, pulseWordCount } = result;
+  const topThemes = batch.themes.map((t) => ({ name: t.name, count: t.count, rank: t.rank }));
+  const trends = buildTrends(
+    topThemes,
+    previous?.themes.map((t) => ({ name: t.name, count: t.count })) ?? null
+  );
 
   await prisma.$transaction(async (tx) => {
     await tx.pulse.upsert({
@@ -60,7 +73,8 @@ export async function POST(_req: NextRequest, ctx: RouteContext<"/api/batches/[i
         summary: pulse.summary,
         observation: pulse.observation,
         actions: pulse.actions,
-        topThemes: batch.themes.map((t) => ({ name: t.name, count: t.count, rank: t.rank })),
+        topThemes,
+        trends,
         wordCount: pulseWordCount,
       },
       create: {
@@ -68,7 +82,8 @@ export async function POST(_req: NextRequest, ctx: RouteContext<"/api/batches/[i
         summary: pulse.summary,
         observation: pulse.observation,
         actions: pulse.actions,
-        topThemes: batch.themes.map((t) => ({ name: t.name, count: t.count, rank: t.rank })),
+        topThemes,
+        trends,
         wordCount: pulseWordCount,
       },
     });

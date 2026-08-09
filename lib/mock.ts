@@ -1,5 +1,13 @@
 import type { AnalysisBatch } from "@/prompts/analyze";
+import type { AskResult } from "@/prompts/ask";
 import type { FeeExplanation, Pulse } from "@/prompts/generate";
+
+export function mockAskReview(): AskResult {
+  return {
+    answer:
+      "The dominant theme is exit load confusion — roughly half of the reviews mention unexpected deductions at redemption and being unable to find the policy beforehand. A related theme is fee transparency in the app: users want expected charges shown before confirming a redemption. A few reviews also report bugs after the recent update (wrong dates, duplicate notifications).",
+  };
+}
 
 export function mockThemeAnalysis(): AnalysisBatch {
   return {

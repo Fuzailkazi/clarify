@@ -1026,6 +1026,7 @@ export const PulseScalarFieldEnum = {
   observation: 'observation',
   actions: 'actions',
   topThemes: 'topThemes',
+  trends: 'trends',
   wordCount: 'wordCount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

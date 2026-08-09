@@ -17,6 +17,11 @@ export type PulseInput = {
   quotes: string[];
 };
 
+export type PreviousWeekInput = {
+  name: string;
+  count: number;
+};
+
 export type GenerateResult = {
   pulse: Pulse;
   fee: FeeExplanation | null;
@@ -43,12 +48,13 @@ function enforceWordCount(pulse: Pulse): Pulse {
 export async function generateIntelligence(
   batchName: string,
   themes: PulseInput[],
-  feeConfirmed: { detected: boolean; name: string | null; explanation: string | null } | null
+  feeConfirmed: { detected: boolean; name: string | null; explanation: string | null } | null,
+  previousWeek?: PreviousWeekInput[] | null
 ): Promise<GenerateResult> {
   const pulsePrompt = buildPulsePrompt(batchName, themes, {
     feeName: feeConfirmed?.detected ? feeConfirmed.name : null,
     explanation: feeConfirmed?.explanation ?? null,
-  });
+  }, previousWeek);
 
   const { data: rawPulse, mock: pulseMock } = await generateStructured(
     pulseSchema,

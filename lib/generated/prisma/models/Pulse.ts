@@ -61,6 +61,7 @@ export type PulseCountAggregateOutputType = {
   observation: number
   actions: number
   topThemes: number
+  trends: number
   wordCount: number
   createdAt: number
   updatedAt: number
@@ -103,6 +104,7 @@ export type PulseCountAggregateInputType = {
   observation?: true
   actions?: true
   topThemes?: true
+  trends?: true
   wordCount?: true
   createdAt?: true
   updatedAt?: true
@@ -202,6 +204,7 @@ export type PulseGroupByOutputType = {
   observation: string
   actions: runtime.JsonValue
   topThemes: runtime.JsonValue
+  trends: runtime.JsonValue | null
   wordCount: number
   createdAt: Date
   updatedAt: Date
@@ -237,6 +240,7 @@ export type PulseWhereInput = {
   observation?: Prisma.StringFilter<"Pulse"> | string
   actions?: Prisma.JsonFilter<"Pulse">
   topThemes?: Prisma.JsonFilter<"Pulse">
+  trends?: Prisma.JsonNullableFilter<"Pulse">
   wordCount?: Prisma.IntFilter<"Pulse"> | number
   createdAt?: Prisma.DateTimeFilter<"Pulse"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Pulse"> | Date | string
@@ -250,6 +254,7 @@ export type PulseOrderByWithRelationInput = {
   observation?: Prisma.SortOrder
   actions?: Prisma.SortOrder
   topThemes?: Prisma.SortOrder
+  trends?: Prisma.SortOrderInput | Prisma.SortOrder
   wordCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -266,6 +271,7 @@ export type PulseWhereUniqueInput = Prisma.AtLeast<{
   observation?: Prisma.StringFilter<"Pulse"> | string
   actions?: Prisma.JsonFilter<"Pulse">
   topThemes?: Prisma.JsonFilter<"Pulse">
+  trends?: Prisma.JsonNullableFilter<"Pulse">
   wordCount?: Prisma.IntFilter<"Pulse"> | number
   createdAt?: Prisma.DateTimeFilter<"Pulse"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Pulse"> | Date | string
@@ -279,6 +285,7 @@ export type PulseOrderByWithAggregationInput = {
   observation?: Prisma.SortOrder
   actions?: Prisma.SortOrder
   topThemes?: Prisma.SortOrder
+  trends?: Prisma.SortOrderInput | Prisma.SortOrder
   wordCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -299,6 +306,7 @@ export type PulseScalarWhereWithAggregatesInput = {
   observation?: Prisma.StringWithAggregatesFilter<"Pulse"> | string
   actions?: Prisma.JsonWithAggregatesFilter<"Pulse">
   topThemes?: Prisma.JsonWithAggregatesFilter<"Pulse">
+  trends?: Prisma.JsonNullableWithAggregatesFilter<"Pulse">
   wordCount?: Prisma.IntWithAggregatesFilter<"Pulse"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Pulse"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Pulse"> | Date | string
@@ -310,6 +318,7 @@ export type PulseCreateInput = {
   observation: string
   actions: Prisma.JsonNullValueInput | runtime.InputJsonValue
   topThemes: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  trends?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   wordCount: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -323,6 +332,7 @@ export type PulseUncheckedCreateInput = {
   observation: string
   actions: Prisma.JsonNullValueInput | runtime.InputJsonValue
   topThemes: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  trends?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   wordCount: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -334,6 +344,7 @@ export type PulseUpdateInput = {
   observation?: Prisma.StringFieldUpdateOperationsInput | string
   actions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   topThemes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  trends?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   wordCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -347,6 +358,7 @@ export type PulseUncheckedUpdateInput = {
   observation?: Prisma.StringFieldUpdateOperationsInput | string
   actions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   topThemes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  trends?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   wordCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -359,6 +371,7 @@ export type PulseCreateManyInput = {
   observation: string
   actions: Prisma.JsonNullValueInput | runtime.InputJsonValue
   topThemes: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  trends?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   wordCount: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -370,6 +383,7 @@ export type PulseUpdateManyMutationInput = {
   observation?: Prisma.StringFieldUpdateOperationsInput | string
   actions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   topThemes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  trends?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   wordCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -382,6 +396,7 @@ export type PulseUncheckedUpdateManyInput = {
   observation?: Prisma.StringFieldUpdateOperationsInput | string
   actions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   topThemes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  trends?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   wordCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -399,6 +414,7 @@ export type PulseCountOrderByAggregateInput = {
   observation?: Prisma.SortOrder
   actions?: Prisma.SortOrder
   topThemes?: Prisma.SortOrder
+  trends?: Prisma.SortOrder
   wordCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -470,6 +486,7 @@ export type PulseCreateWithoutBatchInput = {
   observation: string
   actions: Prisma.JsonNullValueInput | runtime.InputJsonValue
   topThemes: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  trends?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   wordCount: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -481,6 +498,7 @@ export type PulseUncheckedCreateWithoutBatchInput = {
   observation: string
   actions: Prisma.JsonNullValueInput | runtime.InputJsonValue
   topThemes: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  trends?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   wordCount: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -508,6 +526,7 @@ export type PulseUpdateWithoutBatchInput = {
   observation?: Prisma.StringFieldUpdateOperationsInput | string
   actions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   topThemes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  trends?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   wordCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -519,6 +538,7 @@ export type PulseUncheckedUpdateWithoutBatchInput = {
   observation?: Prisma.StringFieldUpdateOperationsInput | string
   actions?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   topThemes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  trends?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   wordCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -533,6 +553,7 @@ export type PulseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   observation?: boolean
   actions?: boolean
   topThemes?: boolean
+  trends?: boolean
   wordCount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -546,6 +567,7 @@ export type PulseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   observation?: boolean
   actions?: boolean
   topThemes?: boolean
+  trends?: boolean
   wordCount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -559,6 +581,7 @@ export type PulseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   observation?: boolean
   actions?: boolean
   topThemes?: boolean
+  trends?: boolean
   wordCount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -572,12 +595,13 @@ export type PulseSelectScalar = {
   observation?: boolean
   actions?: boolean
   topThemes?: boolean
+  trends?: boolean
   wordCount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PulseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "batchId" | "summary" | "observation" | "actions" | "topThemes" | "wordCount" | "createdAt" | "updatedAt", ExtArgs["result"]["pulse"]>
+export type PulseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "batchId" | "summary" | "observation" | "actions" | "topThemes" | "trends" | "wordCount" | "createdAt" | "updatedAt", ExtArgs["result"]["pulse"]>
 export type PulseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   batch?: boolean | Prisma.ReviewBatchDefaultArgs<ExtArgs>
 }
@@ -600,6 +624,7 @@ export type $PulsePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     observation: string
     actions: runtime.JsonValue
     topThemes: runtime.JsonValue
+    trends: runtime.JsonValue | null
     wordCount: number
     createdAt: Date
     updatedAt: Date
@@ -1033,6 +1058,7 @@ export interface PulseFieldRefs {
   readonly observation: Prisma.FieldRef<"Pulse", 'String'>
   readonly actions: Prisma.FieldRef<"Pulse", 'Json'>
   readonly topThemes: Prisma.FieldRef<"Pulse", 'Json'>
+  readonly trends: Prisma.FieldRef<"Pulse", 'Json'>
   readonly wordCount: Prisma.FieldRef<"Pulse", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Pulse", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Pulse", 'DateTime'>

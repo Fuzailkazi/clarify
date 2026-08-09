@@ -80,6 +80,7 @@ model Pulse {
   observation String       @db.Text
   actions     Json
   topThemes   Json
+  trends      Json?
   wordCount   Int
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt

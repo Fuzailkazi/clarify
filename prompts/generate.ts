@@ -40,17 +40,25 @@ function truncateToWords(text: string, max: number): string {
 export function buildPulsePrompt(
   batchName: string,
   themes: ThemeInput[],
-  feeConfusion: { feeName: string | null; explanation: string | null }
+  feeConfusion: { feeName: string | null; explanation: string | null },
+  previousWeek?: { name: string; count: number }[] | null
 ): string {
   const themeList = themes
     .map((t, i) => `${i + 1}. ${t.name} (${t.count} reviews) — ${t.summary}\n   Quotes: ${t.quotes.map((q) => `"${q}"`).join(" ")}`)
     .join("\n");
+
+  const previousList = previousWeek?.length
+    ? previousWeek
+        .map((t, i) => `${i + 1}. ${t.name} (${t.count} reviews)`)
+        .join("\n")
+    : null;
 
   return `You are a product manager writing a concise weekly product pulse for internal stakeholders based on customer reviews.
 
 THEMES THIS WEEK:
 ${themeList}
 ${feeConfusion.feeName ? `FEE CONFUSION: "${feeConfusion.feeName}" — ${feeConfusion.explanation ?? ""}` : ""}
+${previousList ? `\nLAST WEEK (for comparison — do not list these as this week's themes):\n${previousList}` : ""}
 
 WRITE THE WEEKLY PULSE:
 - summary: A tight executive summary of what customers are saying (max 120 words).
@@ -61,6 +69,7 @@ CONSTRAINTS:
 - The ENTIRE pulse is concise: summary + observation + actions must total a maximum of 250 words.
 - Be specific and evidence-backed. Use review language where possible.
 - Do not invent facts not present in the themes.
+${previousList ? "- If a theme grew or shrank sharply versus last week, call that out in the observation with approximate figures." : ""}
 
 Return JSON exactly matching this schema:
 {
