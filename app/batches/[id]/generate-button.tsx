@@ -38,7 +38,7 @@ export function GenerateButton({
       <button
         onClick={onClick}
         disabled={disabled || running}
-        className="rounded-md bg-emerald-700 px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+        className="rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-teal-700 disabled:opacity-50"
       >
         {running ? "Generating…" : canRerun ? "Re-generate" : "Generate pulse & explanation"}
       </button>

@@ -2,6 +2,14 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { FileText, Hash, Mail, ShieldCheck } from "lucide-react";
+
+const TARGETS = [
+  { key: "notion", label: "Notion", icon: FileText },
+  { key: "gmail", label: "Gmail draft", icon: Mail },
+  { key: "slack", label: "Slack", icon: Hash },
+  { key: "google_docs", label: "Google Doc", icon: FileText },
+];
 
 export function ApprovePanel({
   batchId,
@@ -74,68 +82,107 @@ export function ApprovePanel({
     }
   }
 
-  if (approved) {
-    return (
-      <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-5 dark:border-emerald-900 dark:bg-emerald-950/40">
-        <div className="flex items-center gap-2">
-          <span className="rounded-full bg-emerald-600 px-2.5 py-0.5 text-xs font-semibold text-white">
-            Approved
-          </span>
-          <p className="text-sm font-medium">
-            by {approvedBy ?? "unknown"} — external actions unlocked
+  const executed = status === "executed";
+
+  return (
+    <section className="rounded-xl border border-amber-600/20 bg-white p-6 dark:bg-zinc-900">
+      <div className="flex items-center gap-2">
+        <ShieldCheck className="h-5 w-5 text-amber-600 dark:text-amber-400" strokeWidth={2} />
+        <h2 className="text-base font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+          Human approval required
+        </h2>
+      </div>
+
+      {approved ? (
+        <div className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-50 py-2 dark:bg-emerald-500/10">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400" />
+          <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
+            Approved by {approvedBy ?? "unknown"}
           </p>
         </div>
-        <div className="mt-3">
+      ) : (
+        <div className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-amber-50 py-2 dark:bg-amber-500/10">
+          <span className="h-1.5 w-1.5 rounded-full bg-amber-600 dark:bg-amber-400" />
+          <p className="text-sm font-medium text-amber-700 dark:text-amber-400">
+            Awaiting approval
+          </p>
+        </div>
+      )}
+
+      <p className="mt-4 text-[13px] leading-relaxed text-zinc-700 dark:text-zinc-400">
+        On approval, Clarify will log this pulse and fee explanation to your connected targets.
+        Targets without credentials are skipped.
+      </p>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {TARGETS.map((t) => {
+          const Icon = t.icon;
+          return (
+            <span
+              key={t.key}
+              className="inline-flex items-center gap-1.5 rounded-md bg-zinc-100 px-2.5 py-1.5 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+            >
+              <Icon className="h-3.5 w-3.5 text-zinc-500 dark:text-zinc-400" strokeWidth={2} />
+              {t.label}
+            </span>
+          );
+        })}
+      </div>
+
+      {!approved && (
+        <div className="mt-6">
+          <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+            Step 1 — Approve
+          </p>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Your name"
+            className="mt-2 w-full rounded-lg border border-zinc-200 bg-white px-3.5 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-teal-600 focus:outline-none dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+          />
+          <label className="mt-3 flex items-center gap-2 text-[13px] text-zinc-700 dark:text-zinc-300">
+            <input
+              type="checkbox"
+              checked={confirm}
+              onChange={(e) => setConfirm(e.target.checked)}
+              className="h-4 w-4 rounded accent-teal-600"
+            />
+            I have reviewed the generated output
+          </label>
+          <button
+            onClick={onApprove}
+            disabled={!confirm || busy === "approve"}
+            className="mt-4 w-full rounded-lg bg-teal-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-teal-700 disabled:opacity-40"
+          >
+            {busy === "approve" ? "Approving…" : "Approve"}
+          </button>
+        </div>
+      )}
+
+      {approved && (
+        <div className="mt-6">
+          <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+            Step 2 — Execute
+          </p>
           <button
             onClick={onExecute}
-            disabled={busy === "execute" || status === "executed"}
-            className="rounded-md bg-emerald-700 px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            disabled={busy === "execute" || executed}
+            className="mt-2 w-full rounded-lg border border-teal-600 py-3 text-sm font-semibold text-teal-700 transition-colors hover:bg-teal-50 disabled:opacity-40 dark:text-teal-400 dark:hover:bg-teal-500/10"
           >
             {busy === "execute"
               ? "Executing…"
-              : status === "executed"
+              : executed
                 ? "Executed"
                 : "Execute approved actions"}
           </button>
-          {result && <p className="mt-2 text-xs text-emerald-700 dark:text-emerald-300">{result}</p>}
-          {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+          {!executed && (
+            <p className="mt-2 text-xs text-zinc-400">Executes after approval</p>
+          )}
         </div>
-      </div>
-    );
-  }
+      )}
 
-  return (
-    <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-5 dark:border-amber-900 dark:bg-amber-950/40">
-      <h2 className="text-sm font-semibold">Review & approve external actions</h2>
-      <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-        On approval, Clarify will: append this pulse + fee explanation to <b>Notion</b>, create
-        a <b>Gmail draft</b>, post the pulse to <b>Slack</b>, and append it to a <b>Google Doc</b>.
-        Targets without credentials are skipped.
-      </p>
-      <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Your name (recorded with approval)"
-          className="rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
-        />
-        <label className="flex items-center gap-2 text-sm text-zinc-700 dark:text-zinc-300">
-          <input
-            type="checkbox"
-            checked={confirm}
-            onChange={(e) => setConfirm(e.target.checked)}
-          />
-          I have reviewed the output
-        </label>
-        <button
-          onClick={onApprove}
-          disabled={!confirm || busy === "approve"}
-          className="rounded-md bg-emerald-700 px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-40"
-        >
-          {busy === "approve" ? "Approving…" : "Approve & unlock"}
-        </button>
-      </div>
-      {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
-    </div>
+      {result && <p className="mt-3 text-xs text-emerald-700 dark:text-emerald-400">{result}</p>}
+      {error && <p className="mt-3 text-sm text-red-600 dark:text-red-400">{error}</p>}
+    </section>
   );
 }

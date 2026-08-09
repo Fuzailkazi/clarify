@@ -38,7 +38,7 @@ export function AnalyzeButton({
       <button
         onClick={onClick}
         disabled={disabled || running}
-        className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-zinc-50 transition-opacity hover:opacity-90 disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900"
+        className="rounded-lg bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-teal-700 disabled:opacity-50"
       >
         {running ? "Analyzing…" : canRerun ? "Re-run analysis" : "Cluster themes"}
       </button>
